@@ -4,8 +4,8 @@ defmodule Tasktracker3Web.TaskControllerTest do
   alias Tasktracker3.Tasks
   alias Tasktracker3.Tasks.Task
 
-  @create_attrs %{completed: true, description: "some description", time: 42, title: "some title"}
-  @update_attrs %{completed: false, description: "some updated description", time: 43, title: "some updated title"}
+  @create_attrs %{completed: "some completed", description: "some description", time: 42, title: "some title"}
+  @update_attrs %{completed: "some updated completed", description: "some updated description", time: 43, title: "some updated title"}
   @invalid_attrs %{completed: nil, description: nil, time: nil, title: nil}
 
   def fixture(:task) do
@@ -32,7 +32,7 @@ defmodule Tasktracker3Web.TaskControllerTest do
       conn = get conn, task_path(conn, :show, id)
       assert json_response(conn, 200)["data"] == %{
         "id" => id,
-        "completed" => true,
+        "completed" => "some completed",
         "description" => "some description",
         "time" => 42,
         "title" => "some title"}
@@ -54,7 +54,7 @@ defmodule Tasktracker3Web.TaskControllerTest do
       conn = get conn, task_path(conn, :show, id)
       assert json_response(conn, 200)["data"] == %{
         "id" => id,
-        "completed" => false,
+        "completed" => "some updated completed",
         "description" => "some updated description",
         "time" => 43,
         "title" => "some updated title"}

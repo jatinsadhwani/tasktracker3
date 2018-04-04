@@ -5,9 +5,9 @@ defmodule Tasktracker3.Tasks do
 
   import Ecto.Query, warn: false
   alias Tasktracker3.Repo
-
+  
   alias Tasktracker3.Tasks.Task
-
+  alias Tasktracker3.Users.User
   @doc """
   Returns the list of tasks.
 
@@ -36,10 +36,10 @@ defmodule Tasktracker3.Tasks do
       ** (Ecto.NoResultsError)
 
   """
-  def get_task!(id) do 
-    Repo.get!(Task, id)
-    |> Repo.preload(:user)
-  end
+  def get_task!(id) do
+   Repo.get!(Task, id)
+   |> Repo.preload(:user)
+   end
 
   @doc """
   Creates a task.
@@ -54,9 +54,11 @@ defmodule Tasktracker3.Tasks do
 
   """
   def create_task(attrs \\ %{}) do
-    %Task{}
+    {:ok,task} = %Task{}
     |> Task.changeset(attrs)
     |> Repo.insert()
+    task = Repo.preload(task,:user)
+    {:ok, task}
   end
 
   @doc """

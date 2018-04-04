@@ -1,24 +1,20 @@
 import React from 'react';
-import {Card,CardBody} from 'reactstrap';
+import {Button, Card,CardBody} from 'reactstrap';
+
 
 function Task(params){
     let task = params.task;
-    let completed;
-    if(task.completed == true){
-        completed = "true";
-    }
-    else 
-    {
-        completed = "false";
-    }
     return <Card>
         <CardBody>
             <div>
                 <p>Assigned to - {task.user.name} </p>
                 <p>Title - {task.title}</p>
                 <p>Description - {task.description}</p>
-                <p>Completed - {completed}</p>
+                <p>Completed - {task.completed}</p>
                 <p>Time - {task.time}</p>
+            </div>
+            <div>
+                <Button color="primary">Change Status</Button>
             </div>
         </CardBody>
     </Card>;
@@ -28,15 +24,21 @@ function Task(params){
 
 export default function Tasks(params){
 
-    
-
-    let tasks = _.map(params.tasks, (tt) => <Task key={tt.id} task = {tt}/>);
+    let token = params.token
+    let user_id;
+    if(token){
+        user_id = params.token.user_id;    
+    }
+    else{
+        user_id = 0;
+    }
+    let filtered_tasks = _.filter(params.tasks, (task) => task.user.id == user_id)
+    let tasks = _.map(filtered_tasks, (tt) => <Task key={tt.id} task = {tt}/>);
 
     return <div>
         <p>&nbsp;</p>
         <h1>Your Tasks</h1>
         { tasks }
-
 
     </div>
 }

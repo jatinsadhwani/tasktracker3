@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button, FormGroup, Label, Input } from 'reactstrap';
+import api from '../api';
 
 function TaskForm(props){
 
@@ -15,6 +16,15 @@ function TaskForm(props){
         props.dispatch(action);
     }
 
+    function clear(){
+        props.dispatch({type: 'CLEAR_FORM'});
+    }
+
+
+    function submit(){
+        api.submit_task(props.form);
+        clear();
+    }
 
     let users = _.map(props.users, (uu) =>
     <option key={uu.id} value={uu.id}>{uu.name}</option>);
@@ -23,6 +33,7 @@ function TaskForm(props){
         <FormGroup>
             <Label for="user_id">User</Label>
             <Input type="select" name="user_id" value={props.form.user_id} onChange = {update}>
+                <option></option>
                 {users}
             </Input>
         </FormGroup>
@@ -35,16 +46,19 @@ function TaskForm(props){
             <Input type="text" name="description" value={props.form.description} onChange = {update}/>
         </FormGroup>
         <FormGroup>
-            <Input type="checkbox" name="completed" value={props.form.completed} onChange = {update}/>
-            <Label for="completed">Completed</Label> 
+            <Label for="completed">Completed</Label>
+            <Input type="text" name="completed" value={props.form.completed} onChange = {update}/> 
         </FormGroup>
         <FormGroup>
             <Label for="time">Description</Label>
             <Input type="number" name="time" step="15" min="0" value={props.form.time} onChange = {update}/>
         </FormGroup>
-        <Button onClick={() => alert("TODO")} >Create task</Button>
+        <Button onClick={submit} color = "primary">Create task</Button> &nbsp;
+        <Button onClick={clear}>Clear</Button>
     </div>
 }
+
+
 
 function state2props(state){
     return{
