@@ -1,0 +1,17 @@
+<script>
+/*
+    window.state0 = {
+        tasks: [...],
+        users: [...],
+        current_user: {
+            token: Phoenix.Token.sign(...), 
+        }
+    }
+
+*/
+</script>
+
+
+<div id="root">
+<p>This won't work until you have Javascript</p>
+</div>
