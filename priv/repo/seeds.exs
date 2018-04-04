@@ -26,7 +26,7 @@ defmodule Seeds do
         Repo.delete_all(Task)
         Repo.insert!(%Task{user_id: a.id, title: "Haircut", description: "Haircut", completed: false, time: 30 })
         Repo.insert!(%Task{user_id: b.id, title: "Bring Milk", description: "Bring Milk", completed: false, time: 15 })
-        Repo.insert!(%Task{user_id: c.id, title: "Send", description: "Send Post", completed: false, time: 15 })
+        Repo.insert!(%Task{user_id: c.id, title: "Send", description: "Send Post", completed: true, time: 15 })
         end
 end
 

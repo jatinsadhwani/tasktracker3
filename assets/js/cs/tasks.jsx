@@ -3,11 +3,22 @@ import {Card,CardBody} from 'reactstrap';
 
 function Task(params){
     let task = params.task;
+    let completed;
+    if(task.completed == true){
+        completed = "true";
+    }
+    else 
+    {
+        completed = "false";
+    }
     return <Card>
         <CardBody>
             <div>
-                <p>Assigned to.. </p>
-                <p>{task.title}</p>
+                <p>Assigned to - {task.user.name} </p>
+                <p>Title - {task.title}</p>
+                <p>Description - {task.description}</p>
+                <p>Completed - {completed}</p>
+                <p>Time - {task.time}</p>
             </div>
         </CardBody>
     </Card>;

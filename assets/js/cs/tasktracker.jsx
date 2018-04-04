@@ -1,54 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider,connect } from 'react-redux';
 import { BrowserRouter as Router, Route} from 'react-router-dom';
 import Nav from './nav';
 import Tasks from './tasks';
 import UserList from './user-list';
+import TaskForm from './task-form';
 
-export default function tasktracker_init() {
+export default function tasktracker_init(store) {
     ReactDOM.render(
-        <Tasktracker />,
+      <Provider store={store}>
+        <Tasktracker />
+      </Provider>,
         document.getElementById('root')
     );
 }
 
-class Tasktracker extends React.Component {
-
-    constructor(params){
-      super(params)
-      this.state = {
-        tasks: [],
-        users: [],
-      }
-
-      this.request_tasks();
-      this.request_users();
-    }
-
-    request_tasks() {
-      $.ajax("api/v1/tasks", {
-        method: "get",
-        dataType: "json",
-        contentType: "application/json; chartset=UTF-8",
-        success: (resp) => {
-          this.setState(_.extend(this.state, {tasks: resp.data}));
-        }
-      });
-    }
-
-    request_users() {
-      $.ajax("api/v1/users", {
-        method: "get",
-        dataType: "json",
-        contentType: "application/json; chartset=UTF-8",
-        success: (resp) => {
-          this.setState(_.extend(this.state, {users: resp.data}));
-        }
-      });
-    }
-
-
-    render(){
+let Tasktracker = connect((state) => state)((props) =>  {
       return <Router>
         <div>
         <Nav />
@@ -57,25 +25,30 @@ class Tasktracker extends React.Component {
 
           <Route path="/" exact={true} render={()=>
           <div className="col">
-            <Tasks tasks={this.state.tasks} />
+            <TaskForm users={props.users} />
+            <Tasks tasks={props.tasks} />
           </div>
         } />
 
         <Route path="/users" exact={true} render={()=>
           <div className="col">
-          <UserList users = {this.state.users} />
+          <UserList users = {props.users} />
           </div>
         } />
 
         <Route path="/users/:user_id" exact={true} render={({match})=>
-          <Tasks tasks = {_.filter(this.state.tasks, (tt) =>
-            match.params.user_id == tt.user.id 
-           )} />
+          <Tasks tasks = {_.filter(props.tasks, (tt) => {
+              if(tt.user) {
+                return match.params.user_id == tt.user.id;
+              }
+              else{
+                return false;
+              } 
+           } )} />
         } /> 
 
         </div>
 
         </div>
       </Router>;    
-    }
-}
+});

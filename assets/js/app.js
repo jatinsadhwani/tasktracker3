@@ -21,8 +21,13 @@ import ReactDOM from 'react-dom';
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
-
+import store from './store';
+import api from './api';
 import tasktracker_init from './cs/tasktracker';
-$(tasktracker_init);
+$(function(){
+      api.request_tasks();
+      api.request_users();
+    tasktracker_init(store);
+});
 
 
