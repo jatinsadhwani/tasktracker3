@@ -108,6 +108,10 @@ function form(state = empty_form,action){
     switch(action.type){
         case 'UPDATE_FORM':
             return Object.assign({},state,action.data);
+
+        case 'EDIT_FORM':
+            return Object.assign({},state,action.data);
+
         case 'CLEAR_FORM':
             return empty_form;
         default:

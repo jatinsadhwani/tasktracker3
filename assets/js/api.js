@@ -16,7 +16,13 @@ class TheServer {
         });
       }
   
-
+      delete_task(data) {
+        $.ajax("api/v1/tasks/"+data.id, {
+          method: "delete",
+          dataType: "json",
+          contentType: "application/json; chartset=UTF-8",
+        });
+      }
       
       submit_task(data) {
         $.ajax("api/v1/tasks", {

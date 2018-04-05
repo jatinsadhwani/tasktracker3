@@ -1,22 +1,35 @@
 import React from 'react';
 import {Button, Card,CardBody} from 'reactstrap';
-
-
-function editTask(params){
-    data = {
-        id: params.id,
-        user: params.user,
-        description: params.description,
-        completed: params.completed,
-        time:params.time
-    }
-
-    
-
-}
+import api from '../api';
+import { connect } from 'react-redux';
+import store from '../store';
 
 
 function Task(params){
+
+    function deleteTask(){
+        api.delete_task(params.task);
+    }
+    function editTask(){
+        deleteTask();
+        let data = {
+            id: params.task.id,
+            user: params.task.user,
+            description: params.task.description,
+            completed: params.task.completed,
+            time: params.task.time,
+            user_id: params.task.user.id,
+            title: params.task.title
+        }
+        let action = {
+            type: 'EDIT_FORM',
+            data: data
+        }
+        store.dispatch(action);
+    
+    }
+    
+
     let task = params.task;
     return <Card>
         <CardBody>
@@ -28,7 +41,7 @@ function Task(params){
                 <p>Time - {task.time}</p>
             </div>
             <div>
-                <Button color="primary">Change Status</Button>
+                <Button color="primary" onClick={editTask}>Change Status</Button>
             </div>
         </CardBody>
     </Card>;

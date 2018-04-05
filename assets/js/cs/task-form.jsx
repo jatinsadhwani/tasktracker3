@@ -24,6 +24,7 @@ function TaskForm(props){
     function submit(){
         api.submit_task(props.form);
         clear();
+        api.request_tasks();
     }
 
     let users = _.map(props.users, (uu) =>
