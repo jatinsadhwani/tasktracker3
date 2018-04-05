@@ -1,5 +1,20 @@
 # Tasktracker3
 
+Design Choices:-
+1. The user will be first directed to the index screen where they are given an option to either register as a new user or log in as en existing one.
+
+2. When the user logs in, if the name and password match, they can view their tasks and assign new tasks to existing users.
+
+3. To assign tasks to different users, they choose from different users, enter title, description, whether task is completed or not and the time of the task.
+
+4. Each user can view their tasks and edit them.
+
+5. When a user chooses to edit their task, they are shown the edit form where they can alter the details of the task and submit.
+
+6. Also, there is a list of all users currently registered shown.
+
+
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
