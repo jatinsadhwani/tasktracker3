@@ -6,6 +6,7 @@ import Nav from './nav';
 import Tasks from './tasks';
 import UserList from './user-list';
 import TaskForm from './task-form';
+import RegisterForm from './register-form';
 
 export default function tasktracker_init(store) {
     ReactDOM.render(
@@ -16,6 +17,27 @@ export default function tasktracker_init(store) {
     );
 }
 
+function IfRoute(params){
+    let token = params.token;
+    if(token){
+      return <Route path="/" exact={true} render={()=>
+        <div className="col">
+          <TaskForm users={params.users} />
+          <Tasks tasks={params.tasks} token={params.token} />
+        </div>
+      } />;
+    }
+    else
+    {
+      return <Route path="/" exact={true} render={()=>
+        <div className="col">
+          <RegisterForm />
+
+        </div>
+      } />
+    }
+}
+
 let Tasktracker = connect((state) => state)((props) =>  {
       return <Router>
         <div>
@@ -23,12 +45,8 @@ let Tasktracker = connect((state) => state)((props) =>  {
 
         <div class="row">
 
-          <Route path="/" exact={true} render={()=>
-          <div className="col">
-            <TaskForm users={props.users} />
-            <Tasks tasks={props.tasks} token={props.token} />
-          </div>
-        } />
+          <IfRoute token={props.token} users={props.users} tasks={props.tasks}/>
+
 
         <Route path="/users" exact={true} render={()=>
           <div className="col">

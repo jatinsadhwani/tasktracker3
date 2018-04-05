@@ -34,6 +34,8 @@ function token(state = null, action){
         
         case 'SET_TOKEN':
             return action.token;
+        case 'LOGOUT':
+            return action.token;
         default: 
             return state;
     }
@@ -60,6 +62,8 @@ function users(state = [],action){
         case 'USERS_LIST':
             return [...action.users];
         
+        case 'ADD_USER':
+            return [action.user,...state];
         default:
             return state;
     }
@@ -84,6 +88,22 @@ let empty_form = {
     time: "",
 };
 
+let empty_register_form = {
+    name: "",
+    password_hash: "",
+};
+
+function registerform(state = empty_register_form, action){
+    switch(action.type){
+        case 'UPDATE_REGISTER_FORM':
+            return Object.assign({},state,action.data);
+        default: 
+            return state;
+    }
+}
+
+
+
 function form(state = empty_form,action){
     switch(action.type){
         case 'UPDATE_FORM':
@@ -100,7 +120,7 @@ function root_reducer(state0,action){
 
     console.log("state0",state0);
     console.log("action",action);
-    let reducer = combineReducers({users,tasks,form,login,token});
+    let reducer = combineReducers({users,tasks,form,login,token,registerform});
     let state1 = reducer(state0,action);
 
     console.log("state1",state1);

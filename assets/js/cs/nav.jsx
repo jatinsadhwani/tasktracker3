@@ -58,10 +58,21 @@ let Session = connect(({token}) => {return {token};})((params) => {
 function Nav(params){
     let session_info;
     if(params.token){
-        session_info = <Session />;
+        session_info = <div>
+            <Session />;
+            <Button color="primary" onClick={logout}>Log out</Button>
+            </div>
     }
     else{
         session_info = <LoginForm />
+    }
+
+    function logout(){
+        params.dispatch({
+            type: 'LOGOUT',
+            token: null,
+
+        });
     }
 
     return <nav className="navbar navbar-dark bg-dark navbar-expand">
