@@ -2,6 +2,20 @@ import React from 'react';
 import {Button, Card,CardBody} from 'reactstrap';
 
 
+function editTask(params){
+    data = {
+        id: params.id,
+        user: params.user,
+        description: params.description,
+        completed: params.completed,
+        time:params.time
+    }
+
+    
+
+}
+
+
 function Task(params){
     let task = params.task;
     return <Card>
